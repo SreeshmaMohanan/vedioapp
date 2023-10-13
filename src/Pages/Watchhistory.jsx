@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getHistory } from '../services/allAPI'
-function Watchhistory() {
+import { deleteAHistory, getHistory } from '../services/allAPI'
+function Watchhistory(displayData) {
     const [history,setHistory]=useState([])
     const getAllwatchHistory =async()=>{
         const {data} =await getHistory()
@@ -11,6 +11,12 @@ function Watchhistory() {
         getAllwatchHistory()
     },[])
     console.log(history);
+    const handleDeleteHistory=async(id)=>{
+        //make apicall
+        await deleteAHistory(id)
+        //get all history
+        getAllwatchHistory()
+    }
   return (
     <>
     <div className="container mt-5 mb-5 d-flex justify-content-between">
@@ -26,6 +32,7 @@ function Watchhistory() {
                 <th>Caption</th>
                 <th>URL</th>
                 <th>Time Stamp</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +45,7 @@ function Watchhistory() {
                 <td> <a href={item?.embedlink} target='_blank'>{item?.embedlink}</a>
                 </td>
                 <td>{item?.timeStamp}</td>
+                <td><button className='btn' onClick={()=>handleDeleteHistory(item?.id)}><i  className='fa-solid text-danger fa-trash'></i></button></td>
             </tr>)):<p>nothing to display!!!</p>
 }
         </tbody>

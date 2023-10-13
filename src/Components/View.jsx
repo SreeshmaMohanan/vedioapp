@@ -19,7 +19,7 @@ function View({uploadVideoServerResponse}) {
   return (
     <Row>
      {
-      allVideos.length>0?allVideos.map(video=>(<Col sm={6} lg={3} md={4} xl={3} >
+      allVideos?.length>0?allVideos?.map(video=>(<Col sm={12} lg={3} md={4} xl={3} >
        
         <VideoCard displayData={video} setDeleteVideoStatus={setDeleteVideoStatus}/>
         

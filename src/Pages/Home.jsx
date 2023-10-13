@@ -6,13 +6,14 @@ import View from '../Components/View'
 import Category from '../Components/Category'
 function Home() {
 const [uploadVideoServerResponse,setUploadVideoServerResponse]=useState({})
+
   return (
     <>
     <div className="container mt-5 d-flex align-items-center justify-content-between">
       <div className='add'>
       <Add setUploadVideoServerResponse={setUploadVideoServerResponse}/>
       </div>
-      <Link to={'/watch-history'} style={{textDecoration:'none',color:'black'}} className="fs-5">
+      <Link to={'/watch-history'} style={{textDecoration:'none',color:'black'}}  className="fs-5">
         Watch History
       </Link>
 

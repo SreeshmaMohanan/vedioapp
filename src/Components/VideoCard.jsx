@@ -2,7 +2,7 @@ import React from 'react'
 import { Card ,Modal} from 'react-bootstrap'
 import { useState } from 'react';
 import { addHistory, deleteAVideo } from '../services/allAPI';
-function VideoCard({displayData,setDeleteVideoStatus}) {
+function VideoCard({displayData,setDeleteVideoStatus,insideCategory}) {
   //deleting a video
   const removeVideo = async(id)=>{
     //make api call
@@ -10,7 +10,6 @@ function VideoCard({displayData,setDeleteVideoStatus}) {
     setDeleteVideoStatus(true)
   }
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = async () => {
     setShow(true);
@@ -26,16 +25,23 @@ function VideoCard({displayData,setDeleteVideoStatus}) {
     //make api call
     await addHistory(reqBody)
   }
+  const dragStarted =(e,id)=>{
+    console.log("drag started");
+    e.dataTransfer.setData("cardId", id);
+  }
   return (
     <>
        {
         displayData &&
-      <Card className='mb-3'>
+      <Card className='mb-3' draggable onDragStart={(e)=>dragStarted(e,displayData?.id)}>
       <Card.Img style={{height:'180px'}} onClick={handleShow} className='w-100 rounded p-2 img-fluid' variant="top" src={displayData?.url} />
       <Card.Body>
         <Card.Title className='d-flex justify-content-between align-items-center'>
           <h5>{displayData?.caption}</h5>
-          <button onClick={()=>removeVideo(displayData?.id)} className="btn"><i className="fa-solid fa-trash text-danger"></i></button>
+         { 
+            insideCategory?"":
+         <button onClick={()=>removeVideo(displayData?.id)} className="btn"><i className="fa-solid fa-trash text-danger"></i></button>
+         }
         </Card.Title>
         
       </Card.Body>
